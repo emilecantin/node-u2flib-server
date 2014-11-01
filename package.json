@@ -1,0 +1,33 @@
+{
+  "name": "node-u2flib-server",
+  "version": "0.1.0",
+  "description": "Provides functionality for working with the server side aspects of the U2F protocol.",
+  "main": "lib/u2f.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "commander": "^2.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/emilecantin/node-u2flib-server.git"
+  },
+  "keywords": [
+    "u2f",
+    "server",
+    "library",
+    "2-factor",
+    "FIDO"
+  ],
+  "author": "Emile Cantin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/emilecantin/node-u2flib-server/issues"
+  },
+  "homepage": "https://github.com/emilecantin/node-u2flib-server"
+}
