@@ -1,6 +1,6 @@
 {
   "name": "node-u2flib-server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Provides functionality for working with the server side aspects of the U2F protocol.",
   "main": "lib/u2f.js",
   "directories": {
