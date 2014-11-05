@@ -1,33 +1,57 @@
+/**
+ * This is a command-line interface to the library.
+ */
+
 var u2f = require('./lib/u2f.js');
-
-var APP_ID = "http://test.emilecantin.com/app-identity";
-
 var program = require('commander');
 
-program.command('register-start').action(function() {
-  var registration_challenge = u2f.startRegistration(APP_ID);
+var APP_ID = "http://test.emilecantin.com";
+// var APP_ID = "http://demo.yubico.com";
 
-  // registration_challenge.json
-  console.log(JSON.stringify(registration_challenge));
-});
 
-program.command('register-end').action(function() {
-  registration_challenge = require('./registration_challenge.json');
-  var registration_response = require('./registration_response.json');
+program.option('-i, --app-id <string>', 'The application ID (eg.: http://foo.example.com)');
+program.command('register-start')
+  .description('Start the registration process. Outputs the registration challenge JSON.')
+  .action(function() {
+    var challenge = u2f.startRegistration(program.appId);
 
-  var registration = u2f.finishRegistration(registration_challenge, registration_response);
+    // challenge.json
+    console.log(JSON.stringify(challenge));
+  });
 
-  // registration.json
-  console.log(JSON.stringify(registration));
-});
+program.command('register-end <challengePath> <responsePath>')
+  .description('Finish the registration process. Outputs the completed registration JSON.')
+  .action(function(challengePath, responsePath) {
+    var challenge = require(challengePath);
+    var response = require(responsePath);
 
-program.command('authenticate-start').action(function() {
-  registration = require('./registration.json');
+    var registration = u2f.finishRegistration(challenge, response);
 
-  var authentication_challenge = u2f.startAuthentication(APP_ID, registration);
+    // registration.json
+    console.log(JSON.stringify(registration));
+  });
 
-  // authentication_challenge.json
-  console.log(JSON.stringify(authentication_challenge));
-});
+program.command('authenticate-start <registrationPath>')
+  .description('Start the authentication process. Outputs the authentication challenge JSON.')
+  .action(function(registrationPath) {
+    var registration = require(registrationPath);
+
+    var authentication_challenge = u2f.startAuthentication(program.appId, registration);
+
+    // authentication_challenge.json
+    console.log(JSON.stringify(authentication_challenge));
+  });
+
+program.command('authenticate-end <challengePath> <responsePath> <registrationPath>')
+  .description('Finish the authentication process. Outputs ????.')
+  .action(function(challengePath, responsePath, registrationPath) {
+    var challenge = require(challengePath);
+    var response = require(responsePath);
+    var registration = require(registrationPath);
+
+    var authentication_result = u2f.finishAuthentication(challenge, response, registration);
+
+    console.log(authentication_result);
+  });
 
 program.parse(process.argv);
