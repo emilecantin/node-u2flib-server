@@ -136,7 +136,7 @@ The following errors can be thrown:
 };
 ```
 
-They are all exposed under `u2f.errors`.o
+They are all exposed under `u2f.errors`.
 
 Roadmap / Development
 ---------------------
